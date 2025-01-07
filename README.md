@@ -1,6 +1,9 @@
 # RaSeRec
 The code of our paper "RaSeRec: Retrieval-Augmented Sequential Recommendation" [[pdf]](https://arxiv.org/abs/2412.18378).
 
+# Ckpts
+We have provided checkpoints trained on the Beauty datasets under the log directory.
+
 # Framework
 We propose a new SeRec learning paradigm, RaSeRec, which explores RAG in sequential recommendation (SeRec) to solve issues existing in previous paradigms, i.e., preference drift and implicit memory.
 ![image](https://github.com/user-attachments/assets/2563e6ad-76a0-4181-85ef-7ac0aed7a3a9)
