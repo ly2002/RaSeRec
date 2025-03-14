@@ -94,3 +94,7 @@ class BPR(GeneralRecommender):
         all_item_e = self.item_embedding.weight
         score = torch.matmul(user_e, all_item_e.transpose(0, 1))
         return score.view(-1)
+
+    def precached_knowledge_val(self, val_dataset):
+        # 如果评估时需要调用，也直接空实现
+        pass

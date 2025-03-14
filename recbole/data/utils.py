@@ -90,7 +90,7 @@ def data_preparation(config, dataset, save=False):
         'batch_size': config['train_batch_size'],
         'dl_format': config['MODEL_INPUT_TYPE'],
         'shuffle': True,
-        'phase': 'train'
+        # 'phase': 'train'
     }
     if train_neg_sample_args['strategy'] != 'none':
         if dataset.label_field in dataset.inter_feat:
@@ -132,7 +132,7 @@ def data_preparation(config, dataset, save=False):
         'batch_size': config['eval_batch_size'],
         'dl_format': InputType.POINTWISE,
         'shuffle': False,
-        'phase': 'eval'
+        # 'phase': 'eval'
     }
     valid_kwargs = {'dataset': valid_dataset}
     test_kwargs = {'dataset': test_dataset}
