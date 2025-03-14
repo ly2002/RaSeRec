@@ -86,12 +86,18 @@ class NGCF(GeneralRecommender):
             Sparse tensor of the normalized interaction matrix.
         """
         # build adj matrix
-        A = sp.dok_matrix((self.n_users + self.n_items, self.n_users + self.n_items), dtype=np.float32)
+        # A = sp.dok_matrix((self.n_users + self.n_items, self.n_users + self.n_items), dtype=np.float32)
+        # inter_M = self.interaction_matrix
+        # inter_M_t = self.interaction_matrix.transpose()
+        # data_dict = dict(zip(zip(inter_M.row, inter_M.col + self.n_users), [1] * inter_M.nnz))
+        # data_dict.update(dict(zip(zip(inter_M_t.row + self.n_users, inter_M_t.col), [1] * inter_M_t.nnz)))
+        # A.update(data_dict)
         inter_M = self.interaction_matrix
         inter_M_t = self.interaction_matrix.transpose()
-        data_dict = dict(zip(zip(inter_M.row, inter_M.col + self.n_users), [1] * inter_M.nnz))
-        data_dict.update(dict(zip(zip(inter_M_t.row + self.n_users, inter_M_t.col), [1] * inter_M_t.nnz)))
-        A._update(data_dict)
+        rows = np.concatenate([inter_M.row, inter_M_t.row + self.n_users])
+        cols = np.concatenate([inter_M.col + self.n_users, inter_M_t.col])
+        data = np.ones(inter_M.nnz + inter_M_t.nnz, dtype=np.float32)
+        A = sp.coo_matrix((data, (rows, cols)), shape=(self.n_users + self.n_items, self.n_users + self.n_items), dtype=np.float32)
         # norm adj matrix
         sumArr = (A > 0).sum(axis=1)
         diag = np.array(sumArr.flatten())[0] + 1e-7  # add epsilon to avoid divide by zero Warning
